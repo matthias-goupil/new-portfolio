@@ -194,7 +194,7 @@ function Tab({ id, label, onClick, active }: TabProps) {
 export default function DiplomsAndExperiences() {
     const [tab, setTab] = useState("diploms");
     const containerRef = useRef<HTMLDivElement>(null);
-    const [indicator, setIndicator] = useState({ y: 0, width: 0, height: 0 });
+    const [indicator, setIndicator] = useState({x:0 ,  y: 0, width: 0, height: 0 });
     const [selectedXpIndex, setSelectedXpIndex] = useState<null | number>(null);
     const selectedXp = useMemo(() => selectedXpIndex != null ? experiences[selectedXpIndex]: null, [selectedXpIndex]);
 
@@ -207,6 +207,7 @@ export default function DiplomsAndExperiences() {
 
         setIndicator({
             y: activeTab.offsetTop,
+            x: activeTab.offsetLeft,
             width: activeTab.offsetWidth,
             height: activeTab.offsetHeight,
         });
@@ -215,12 +216,12 @@ export default function DiplomsAndExperiences() {
     return (
         <section
             id="experiences"
-            className="w-full min-h-screen flex gap-16 py-40 px-36"
+            className="w-full flex flex-col md:flex-row gap-8 md:gap-16 py-20 px-6 md:py-40 md:px-36"
         >
             {/* Tabs */}
             <div
                 ref={containerRef}
-                className="relative flex flex-col gap-2 p-2 h-fit rounded-lg border shadow-xs bg-white/10 backdrop-blur-md border-white/20"
+                className="relative flex flex-row md:flex-col gap-2 p-2 md:p-2 rounded-lg border shadow-xs bg-white/10 backdrop-blur-md border-white/20 w-full md:w-48"
             >
                 <Tab id="diploms" label="Diplômes" active={tab === "diploms"} onClick={setTab} />
                 <Tab id="xp" label="Expériences" active={tab === "xp"} onClick={setTab} />
@@ -244,7 +245,7 @@ export default function DiplomsAndExperiences() {
                     >
                         {tab === "diploms" && (
                             <>
-                                <h1 className="mb-10 font-title text-6xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent">
+                                <h1 className="mb-6 md:mb-10 font-title text-4xl sm:text-5xl md:text-6xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent text-center md:text-left">
                                     Diplômes
                                 </h1>
 
@@ -258,18 +259,18 @@ export default function DiplomsAndExperiences() {
                                         <motion.div
                                             key={i}
                                             variants={itemVariants}
-                                            className="flex items-end justify-between p-4 rounded-lg border shadow-xs bg-white/10 backdrop-blur-md border-white/20"
+                                            className="flex flex-col md:flex-row items-start md:items-end justify-between p-4 sm:p-6 rounded-lg border shadow-xs bg-white/10 backdrop-blur-md border-white/20 gap-4"
                                         >
-                                            <div className="flex gap-4 items-center">
-                                                <p className="font-title text-6xl bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent">
+                                            <div className="flex gap-4 items-center md:items-end flex-1">
+                                                <p className="font-title text-3xl sm:text-4xl md:text-5xl bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent">
                                                     +{d.bac}
                                                 </p>
                                                 <div>
-                                                    <h2 className="font-title text-lg">{d.name}</h2>
-                                                    <p className="text-sm font-light">
+                                                    <h2 className="font-title text-lg sm:text-xl">{d.name}</h2>
+                                                    <p className="text-sm sm:text-base font-light">
                                                         {d.school} · {d.location}
                                                     </p>
-                                                    <p className="text-sm font-light">
+                                                    <p className="text-sm sm:text-base font-light">
                                                         {d.duration} an{d.duration > 1 && "s"}{" "}
                                                         {d.alternance && "en alternance"}
                                                     </p>
@@ -278,32 +279,29 @@ export default function DiplomsAndExperiences() {
 
                                             <Dialog>
                                                 <DialogTrigger asChild>
-                                                    <Button variant="secondary">
+                                                    <Button variant="secondary" className="mt-2 md:mt-0">
                                                         Plus de détails <ArrowRight />
                                                     </Button>
                                                 </DialogTrigger>
-                                                <DialogContent className="rounded-lg shadow bg-white/10 backdrop-blur-md border-white/20">
+                                                <DialogContent className="rounded-lg shadow bg-white/10 backdrop-blur-md border-white/20 p-4 sm:p-6">
                                                     <DialogHeader>
-                                                        <DialogTitle>{d.name}</DialogTitle>
-                                                        <DialogDescription>
-                                                            Détails de la formation
-                                                        </DialogDescription>
+                                                        <DialogTitle className="text-lg sm:text-xl md:text-2xl">{d.name}</DialogTitle>
+                                                        <DialogDescription>Détails de la formation</DialogDescription>
                                                     </DialogHeader>
-                                                    <div className="flex gap-4 items-center">
-                                                        <img src={d.logo} className="w-40 py-4" />
+                                                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center mt-2">
+                                                        <img src={d.logo} className="w-32 sm:w-40 py-2" />
                                                         <div>
-                                                            <p className="text-sm font-light">
+                                                            <p className="text-sm sm:text-base font-light">
                                                                 {d.school} · {d.location}
                                                             </p>
-                                                            <p className="text-sm font-light">
+                                                            <p className="text-sm sm:text-base font-light">
                                                                 {d.duration} an{d.duration > 1 && "s"}{" "}
                                                                 {d.alternance && "en alternance"}
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <Separator />
-
-                                                    {d.description}
+                                                    <Separator className="my-4" />
+                                                    <p className="text-sm sm:text-base">{d.description}</p>
                                                 </DialogContent>
                                             </Dialog>
                                         </motion.div>
@@ -317,33 +315,34 @@ export default function DiplomsAndExperiences() {
                                 <Dialog open={selectedXpIndex !== null} onOpenChange={(v) => {
                                     if (!v) setSelectedXpIndex(null)
                                 }}>
-                                    <DialogContent className="rounded-lg shadow bg-white/10 backdrop-blur-md border-white/20">
+                                    <DialogContent className="rounded-lg shadow bg-white/10 backdrop-blur-md border-white/20 p-4 sm:p-6">
                                         <DialogHeader>
-                                            <DialogTitle>{selectedXp?.name}</DialogTitle>
+                                            <DialogTitle className="text-lg sm:text-xl md:text-2xl">{selectedXp?.name}</DialogTitle>
                                             <DialogDescription>{selectedXp?.company} · {selectedXp?.location}</DialogDescription>
                                         </DialogHeader>
-                                        {selectedXp?.content}
-                                        <h2 className="font-bold">Stack technique</h2>
+                                        <div className="mt-2">{selectedXp?.content}</div>
+                                        <h2 className="font-bold mt-4">Stack technique</h2>
                                         <div className="flex flex-wrap gap-2 mt-2">
-                                            {(selectedXp?.stack || []).map((tech: string, i: number) => (
+                                            {(selectedXp?.stack || []).map((tech, i) => (
                                                 <span
                                                     key={i}
-                                                    className="px-3 py-1 text-xs rounded-full border bg-white/20 backdrop-blur-md border-white/30"
+                                                    className="px-2 py-1 text-xs sm:text-sm rounded-full border bg-white/20 backdrop-blur-md border-white/30"
                                                 >
-                            {tech}
-                        </span>))}
+                                            {tech}
+                                        </span>
+                                            ))}
                                         </div>
-                                        <DialogFooter>
+                                        <DialogFooter className="mt-4">
                                             {selectedXp?.website && <Button variant="secondary" asChild>
                                                 <Link target="_blank" href={selectedXp.website}>
                                                     <Globe /> Site web
                                                 </Link>
                                             </Button>}
                                         </DialogFooter>
-
                                     </DialogContent>
                                 </Dialog>
-                                <h1 className="mb-10 font-title text-6xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent">
+
+                                <h1 className="mb-6 md:mb-10 font-title text-4xl sm:text-5xl md:text-6xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent text-center md:text-left">
                                     Expériences
                                 </h1>
 
@@ -357,22 +356,19 @@ export default function DiplomsAndExperiences() {
                                         <motion.div
                                             key={i}
                                             variants={itemVariants}
-                                            className="p-6 rounded-lg border shadow-xs bg-white/10 backdrop-blur-md border-white/20"
+                                            className="flex flex-col p-4 sm:p-6 rounded-lg border shadow-xs bg-white/10 backdrop-blur-md border-white/20 gap-2"
                                         >
-                                            <div className="flex items-center justify-between mb-2">
+                                            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-2 gap-2 md:gap-4">
                                                 <div>
-                                                    <h2 className="font-title text-xl">{xp.name}</h2>
-                                                    <p className="text-sm font-light">
-                                                        {xp.company} · {xp.location}
-                                                    </p>
+                                                    <h2 className="font-title text-lg sm:text-xl">{xp.name}</h2>
+                                                    <p className="text-sm sm:text-base font-light">{xp.company} · {xp.location}</p>
                                                 </div>
-
-                                                <span className="text-sm font-light text-emerald-700">
-                                                  De {xp.start} à {xp.end} ({xp.duration})
-                                                </span>
+                                                <span className="text-sm sm:text-base font-light text-emerald-700">
+                                            De {xp.start} à {xp.end} ({xp.duration})
+                                        </span>
                                             </div>
 
-                                            <p className="text-sm text-emerald-950 mb-4 max-w-2xl">
+                                            <p className="text-sm sm:text-base text-emerald-950 mb-2">
                                                 {xp.description}
                                             </p>
 
@@ -380,23 +376,24 @@ export default function DiplomsAndExperiences() {
                                                 {xp.stack.map((tech, index) => (
                                                     <span
                                                         key={index}
-                                                        className="px-3 py-1 text-xs rounded-full border bg-white/20 backdrop-blur-md border-white/30"
+                                                        className="px-2 py-1 text-xs sm:text-sm rounded-full border bg-white/20 backdrop-blur-md border-white/30"
                                                     >
-                                                        {tech}
-                                                    </span>
+                                                {tech}
+                                            </span>
                                                 ))}
                                             </div>
-                                            <Button variant="secondary" className="mt-4" onClick={() => setSelectedXpIndex(i)}>Plus d'infos <ArrowRight /></Button>
-
+                                            <Button variant="secondary" className="mt-2 sm:mt-4" onClick={() => setSelectedXpIndex(i)}>
+                                                Plus d'infos <ArrowRight />
+                                            </Button>
                                         </motion.div>
                                     ))}
                                 </motion.div>
                             </>
                         )}
-
                     </motion.div>
                 </AnimatePresence>
             </div>
         </section>
+
     );
 }

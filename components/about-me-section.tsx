@@ -143,23 +143,24 @@ export default function AboutMeSection() {
     return (
         <motion.section
             id="about-me"
-            className="relative w-full min-h-screen py-40 px-36"
+            className="relative w-full min-h-screen py-20 px-6 md:py-40 md:px-36"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, amount: 0.3 }}
         >
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-0">
 
-                <div className="w-1/2">
+                {/* Texte */}
+                <div className="w-full md:w-1/2">
                     <motion.h1
-                        className="mb-10 font-title text-6xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent"
+                        className="mb-6 md:mb-10 font-title text-4xl md:text-6xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent"
                         variants={textVariants}
                     >
                         A propos de moi
                     </motion.h1>
                     <motion.p
-                        className="text-justify text-xl text-emerald-950"
+                        className="text-justify text-base md:text-xl text-emerald-950"
                         variants={textVariants}
                     >
                         Hey, moi c’est Matthias ! <br />
@@ -169,9 +170,10 @@ export default function AboutMeSection() {
                         <br />Je maîtrise l'anglais et le français, ce qui me permet de collaborer facilement sur des projets internationaux.
                     </motion.p>
 
-                    <div className="mt-8">
+                    {/* Stack */}
+                    <div className="mt-6 md:mt-8">
                         <motion.h2
-                            className="font-title text-2xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent mb-4"
+                            className="font-title text-xl md:text-2xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent mb-4"
                             variants={textVariants}
                         >
                             J'ai déjà travaillé avec
@@ -181,7 +183,7 @@ export default function AboutMeSection() {
                                 <motion.div
                                     key={i}
                                     title={name}
-                                    className="aspect-square w-16 rounded-lg shadow-xs bg-white/10 backdrop-blur-md border-white/20 flex items-center justify-center"
+                                    className="aspect-square w-12 md:w-16 rounded-lg shadow-xs bg-white/10 backdrop-blur-md border-white/20 flex items-center justify-center"
                                     variants={textVariants}
                                 >
                                     {icon}
@@ -191,14 +193,17 @@ export default function AboutMeSection() {
                     </div>
                 </div>
 
-                <motion.div variants={imageVariants}>
-                    <div className="aspect-square rounded-full bg-linear-to-tr from-emerald-500 to-emerald-900 overflow-hidden p-10 w-96">
-                        <img src="/me.png" alt="Me" className="aspect-square w-full mt-14"/>
+                {/* Image */}
+                <motion.div variants={imageVariants} className="w-full md:w-auto flex justify-center">
+                    <div className="aspect-square w-64 md:w-96 rounded-full bg-linear-to-tr from-emerald-500 to-emerald-900 overflow-hidden p-6 md:p-10">
+                        <img src="/me.png" alt="Me" className="aspect-square w-full object-cover"/>
                     </div>
                 </motion.div>
+
             </div>
         </motion.section>
     );
+
 }
 
 // shadow-[0_0_80px_20px_rgba(130,238,137,0.6)]

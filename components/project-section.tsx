@@ -224,83 +224,88 @@ export default function ProjectSection() {
 
     const selectedProject = useMemo(() => selectedProjectIndex !== null ? projects[selectedProjectIndex] : null, [selectedProjectIndex]);
 
-    return (
-        <section id="projects" className="w-full min-h-screen py-40 px-36">
-            <Dialog open={selectedProjectIndex !== null} onOpenChange={(v) => {
-                if (!v) setSelectedProjectIndex(null)
-            }}>
-                <DialogContent className="rounded-lg shadow bg-white/10 backdrop-blur-md border-white/20">
-                    <DialogHeader>
-                        <DialogTitle>{selectedProject?.name}</DialogTitle>
-                    </DialogHeader>
-                    {selectedProject?.content}
-                    <h2 className="font-bold">Stack technique</h2>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                        {selectedProject?.stack.map((tech, i) => (
-                            <span
-                                key={i}
-                                className="px-3 py-1 text-xs rounded-full border bg-white/20 backdrop-blur-md border-white/30"
-                            >
-                            {tech}
-                        </span>))}
-                        </div>
-                    <DialogFooter>
-                        {selectedProject?.website && <Button variant="secondary" asChild>
+    return <section id="projects" className="w-full min-h-screen py-20 px-6 md:py-40 md:px-36">
+        <Dialog open={selectedProjectIndex !== null} onOpenChange={(v) => {
+            if (!v) setSelectedProjectIndex(null)
+        }}>
+            <DialogContent className="rounded-lg shadow bg-white/10 backdrop-blur-md border-white/20 p-4 sm:p-6">
+                <DialogHeader>
+                    <DialogTitle className="text-xl sm:text-2xl md:text-3xl font-bold">
+                        {selectedProject?.name}
+                    </DialogTitle>
+                </DialogHeader>
+                <div className="mt-2">{selectedProject?.content}</div>
+                <h2 className="font-bold mt-4">Stack technique</h2>
+                <div className="flex flex-wrap gap-2 mt-2">
+                    {selectedProject?.stack.map((tech, i) => (
+                        <span
+                            key={i}
+                            className="px-2 py-1 text-xs sm:text-sm rounded-full border bg-white/20 backdrop-blur-md border-white/30"
+                        >
+                        {tech}
+                    </span>
+                    ))}
+                </div>
+                <DialogFooter className="flex flex-wrap gap-2 mt-4">
+                    {selectedProject?.website && (
+                        <Button variant="secondary" asChild>
                             <Link target="_blank" href={selectedProject.website}>
                                 <Globe /> Site web
                             </Link>
-                        </Button>}
-                        {selectedProject?.github && <Button asChild>
+                        </Button>
+                    )}
+                    {selectedProject?.github && (
+                        <Button asChild>
                             <Link target="_blank" href={selectedProject.github}>
-                           <Github /> Github
+                                <Github /> Github
                             </Link>
-                        </Button>}
-                    </DialogFooter>
+                        </Button>
+                    )}
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
 
-                </DialogContent>
-            </Dialog>
+        <h1 className="mb-8 md:mb-10 font-title text-4xl sm:text-5xl md:text-6xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent text-center md:text-left">
+            Projets récents
+        </h1>
 
-            <h1 className="mb-10 font-title text-6xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent">
-                Projets récents
-            </h1>
+        <motion.div
+            variants={listVariants}
+            initial="initial"
+            animate="animate"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+        >
+            {projects.map((project, index) => (
+                <motion.div
+                    key={index}
+                    variants={itemVariants}
+                    className="cursor-pointer rounded-lg border shadow-xs bg-white/10 backdrop-blur-md border-white/20 p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 hover:scale-105 transition-transform"
+                    onClick={() => setSelectedProjectIndex(index)}
+                >
+                    {project.image && (
+                        <img
+                            src={project.image}
+                            alt={project.name}
+                            className="w-full object-cover rounded-md max-h-48 sm:max-h-60"
+                        />
+                    )}
 
-            <motion.div
-                variants={listVariants}
-                initial="initial"
-                animate="animate"
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-                {projects.map((project, index) => (
-                    <motion.div
-                        key={index}
-                        variants={itemVariants}
-                        className="cursor-pointer rounded-lg border shadow-xs bg-white/10 backdrop-blur-md border-white/20 p-6 flex flex-col gap-4 hover:scale-105 transition-transform"
-                        onClick={() => setSelectedProjectIndex(index)}
-                    >
-                        {project.image && (
-                            <img
-                                src={project.image}
-                                alt={project.name}
-                                className="w-full object-cover rounded-md"
-                            />
-                        )}
+                    <h2 className="font-title text-lg sm:text-xl">{project.name}</h2>
+                    <p className="text-sm sm:text-base text-emerald-950">{project.description}</p>
 
-                        <h2 className="font-title text-xl">{project.name}</h2>
-                        <p className="text-sm text-emerald-950">{project.description}</p>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        {project.stack.map((tech, i) => (
+                            <span
+                                key={i}
+                                className="px-2 py-1 text-xs sm:text-sm rounded-full border bg-white/20 backdrop-blur-md border-white/30"
+                            >
+                            {tech}
+                        </span>
+                        ))}
+                    </div>
+                </motion.div>
+            ))}
+        </motion.div>
+    </section>
 
-                        <div className="flex flex-wrap gap-2 mt-2">
-                            {project.stack.map((tech, i) => (
-                                <span
-                                    key={i}
-                                    className="px-3 py-1 text-xs rounded-full border bg-white/20 backdrop-blur-md border-white/30"
-                                >
-                  {tech}
-                </span>
-                            ))}
-                        </div>
-                    </motion.div>
-                ))}
-            </motion.div>
-        </section>
-    );
 }

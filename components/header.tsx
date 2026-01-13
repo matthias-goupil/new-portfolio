@@ -21,7 +21,7 @@ export default function Header() {
         <motion.header
             layout
             transition={{ layout: { type: "spring", stiffness: 300, damping: 30 } }}
-            className="fixed top-0 w-full p-8 z-10"
+            className="max-md:hidden fixed top-0 w-full p-8 z-10"
         >
             <div className={cn('flex items-center',scrolled ? 'justify-center':'justify-between')}>
                 {/* Zone gauche */}
