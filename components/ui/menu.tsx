@@ -10,7 +10,7 @@ import {usePathname} from "next/navigation"
 const links = [
     { label: "Accueil", href: "#home" },
     { label: "A propos de moi", href: "#about-me" },
-    { label: "Expériences et Diplômes", href: "#experiences" },
+    { label: "Diplômes et experiences", href: "#experiences" },
     { label: "Projets", href: "#projects" },
 ];
 
@@ -93,7 +93,7 @@ export default function Menu() {
                     </li>
                 ))}
             </ul>
-            <ThemeSwitcher />
+            {/*<ThemeSwitcher/>*/}
         </nav>
     );
 }
