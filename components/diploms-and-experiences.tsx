@@ -1,19 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import {ArrowRight, Globe} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
+    DialogDescription, DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 const diploms = [
     {
@@ -53,25 +54,93 @@ const diploms = [
 
 const experiences = [
     {
-        name: "Développeur web",
+        name: "Développeur web en alternance",
         company: "Smile",
         location: "Montpellier",
         duration: "3 ans",
-        stack: ["React", "Next.js", "TypeScript", "Symfony", "API REST", "API Graphql", "Docker", "Git","Playwright", "vue.js"],
+        website: "https://smile.eu/fr",
+        start: "05/09/2022",
+        end: "22/08/2025",
+        stack: [
+            "React",
+            "Next.js",
+            "TypeScript",
+            "Symfony",
+            "API REST",
+            "API Graphql",
+            "Docker",
+            "Git",
+            "Playwright",
+            "Vue.js",
+            "Méthodes agiles SCRUM",
+            "Vitest",
+            "Playwright",
+            "Jest",
+            "Redux",
+            "VueX",
+            "Storybook"
+        ],
         description:
             "Développement et maintenance d’applications web, participation aux choix techniques et collaboration avec des équipes pluridisciplinaires.",
+        content: (
+            <div>
+                Durant mes trois années chez Smile, j’ai travaillé sur des projets variés,
+                allant de moteurs de recherche e-commerce à des applications institutionnelles
+                pour le secteur public.
+                <br /><br />
+                Mon rôle comprenait :
+                <ul className="list-disc">
+                    <li>Développement front-end en React, Next.js et Vue.js, avec une forte attention à l’expérience utilisateur et aux performances.</li>
+                    <li>Intégration d’API REST et GraphQL réalisé par les développeurs backend</li>
+                    <li>Participation aux choix techniques, revue de code, et mise en place de tests unitaires et end-to-end (Vitest, Jest, Playwright).</li>
+                    <li>Collaboration avec des équipes pluridisciplinaires : designers, product owners et développeurs back-end pour livrer des applications robustes et maintenables.</li>
+                    <li>Utilisation de Docker pour les environnements de développement et de Git pour le versioning et la collaboration en équipe.</li>
+                </ul>
+                Ces expériences m’ont permis de consolider mes compétences full-stack, d’apprendre à gérer des projets complexes et de comprendre les besoins utilisateurs finaux.
+            </div>
+        ),
     },
     {
         name: "Développeur fullstack",
         company: "WebexpR",
         location: "Paris",
-        duration: "",
-        stack: ["React", "Next.js", "TypeScript","Medusa.js", "Git","docker", "PostgreSQL", "API REST", ],
+        duration: "2 mois",
+        stack: [
+            "React",
+            "Next.js",
+            "TypeScript",
+            "Medusa.js",
+            "Git",
+            "Docker",
+            "PostgreSQL",
+            "API REST",
+            "Builder.io"
+        ],
+        start: "01/09/2022",
+        end: "30/10/2025",
+        website: "https://www.webexpr.fr/",
         description:
-            "Conception et développement de fonctionnalités front et back, optimisation des performances de sites e-commerces",
+            "Conception et développement de fonctionnalités front et back, optimisation des performances de sites e-commerces.",
+        content: (
+            <div>
+                Chez WebexpR, j’ai participé au développement de plusieurs sites e-commerce
+                basés sur Medusa.js, en prenant en charge à la fois le front-end et le back-end.
+                <br /><br />
+                Mes missions principales :
+                <ul className="list-disc">
+                    <li>Développement et maintenance des fonctionnalités d’authentification OTP pour sécuriser les comptes utilisateurs.</li>
+                    <li>Intégration de contenus dynamiques avec Builder.io pour permettre aux équipes marketing de gérer facilement les pages produits et promotions.</li>
+                    <li>Création de plugins Medusa pour étendre les fonctionnalités e-commerce selon les besoins spécifiques des projets.</li>
+                    <li>Correction de bugs et optimisation du code existant pour améliorer la stabilité et les performances des sites.</li>
+                    <li>Gestion des règles fiscales et calcul des taxes lors de la validation des paniers clients pour garantir la conformité des transactions.</li>
+                    <li>Développement des interfaces utilisateurs avec React et Next.js, intégration TailwindCSS et Shadcn/ui.</li>
+                </ul>
+                Ce rôle m’a permis de renforcer mes compétences full-stack, de travailler sur des problématiques métier concrètes liées à l’e-commerce et de livrer des fonctionnalités critiques pour l’expérience utilisateur.
+            </div>
+
+        ),
     },
 ];
-
 
 const tabVariants = {
     initial: { opacity: 0, y: 20 },
@@ -126,6 +195,8 @@ export default function DiplomsAndExperiences() {
     const [tab, setTab] = useState("diploms");
     const containerRef = useRef<HTMLDivElement>(null);
     const [indicator, setIndicator] = useState({ y: 0, width: 0, height: 0 });
+    const [selectedXpIndex, setSelectedXpIndex] = useState<null | number>(null);
+    const selectedXp = useMemo(() => selectedXpIndex != null ? experiences[selectedXpIndex]: null, [selectedXpIndex]);
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -207,7 +278,7 @@ export default function DiplomsAndExperiences() {
 
                                             <Dialog>
                                                 <DialogTrigger asChild>
-                                                    <Button variant="outline">
+                                                    <Button variant="secondary">
                                                         Plus de détails <ArrowRight />
                                                     </Button>
                                                 </DialogTrigger>
@@ -243,6 +314,35 @@ export default function DiplomsAndExperiences() {
 
                         {tab === "xp" && (
                             <>
+                                <Dialog open={selectedXpIndex !== null} onOpenChange={(v) => {
+                                    if (!v) setSelectedXpIndex(null)
+                                }}>
+                                    <DialogContent className="rounded-lg shadow bg-white/10 backdrop-blur-md border-white/20">
+                                        <DialogHeader>
+                                            <DialogTitle>{selectedXp?.name}</DialogTitle>
+                                            <DialogDescription>{selectedXp?.company} · {selectedXp?.location}</DialogDescription>
+                                        </DialogHeader>
+                                        {selectedXp?.content}
+                                        <h2 className="font-bold">Stack technique</h2>
+                                        <div className="flex flex-wrap gap-2 mt-2">
+                                            {(selectedXp?.stack || []).map((tech: string, i: number) => (
+                                                <span
+                                                    key={i}
+                                                    className="px-3 py-1 text-xs rounded-full border bg-white/20 backdrop-blur-md border-white/30"
+                                                >
+                            {tech}
+                        </span>))}
+                                        </div>
+                                        <DialogFooter>
+                                            {selectedXp?.website && <Button variant="secondary" asChild>
+                                                <Link target="_blank" href={selectedXp.website}>
+                                                    <Globe /> Site web
+                                                </Link>
+                                            </Button>}
+                                        </DialogFooter>
+
+                                    </DialogContent>
+                                </Dialog>
                                 <h1 className="mb-10 font-title text-6xl font-bold bg-linear-to-tr from-emerald-500 to-emerald-900 bg-clip-text text-transparent">
                                     Expériences
                                 </h1>
@@ -268,25 +368,26 @@ export default function DiplomsAndExperiences() {
                                                 </div>
 
                                                 <span className="text-sm font-light text-emerald-700">
-              {xp.duration}
-            </span>
+                                                  De {xp.start} à {xp.end} ({xp.duration})
+                                                </span>
                                             </div>
 
                                             <p className="text-sm text-emerald-950 mb-4 max-w-2xl">
                                                 {xp.description}
                                             </p>
 
-                                            {/* Stack */}
                                             <div className="flex flex-wrap gap-2">
                                                 {xp.stack.map((tech, index) => (
                                                     <span
                                                         key={index}
                                                         className="px-3 py-1 text-xs rounded-full border bg-white/20 backdrop-blur-md border-white/30"
                                                     >
-                {tech}
-              </span>
+                                                        {tech}
+                                                    </span>
                                                 ))}
                                             </div>
+                                            <Button variant="secondary" className="mt-4" onClick={() => setSelectedXpIndex(i)}>Plus d'infos <ArrowRight /></Button>
+
                                         </motion.div>
                                     ))}
                                 </motion.div>
