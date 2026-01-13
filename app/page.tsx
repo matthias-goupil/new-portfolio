@@ -6,7 +6,7 @@ import BlobBackground from "@/components/blob-background";
 
 export default function Home() {
   return (
-      <main className="w-full z-0 relative">
+      <main className="w-full z-0 relative bg-slate-100">
           <BlobBackground />
           <HeroSection/>
           <AboutMeSection/>
