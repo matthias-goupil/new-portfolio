@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import {Gabarito, Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
-import Menu from "@/components/ui/menu";
-import Image from "next/image"
 import Header from "@/components/header";
 
 const geistSans = Geist({

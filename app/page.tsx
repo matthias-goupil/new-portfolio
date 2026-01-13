@@ -3,7 +3,6 @@ import AboutMeSection from "@/components/about-me-section";
 import DiplomsAndExperiences from "@/components/diploms-and-experiences";
 import ProjectSection from "@/components/project-section";
 import BlobBackground from "@/components/blob-background";
-import ContactMeSection from "@/components/contact-me-section";
 
 export default function Home() {
   return (

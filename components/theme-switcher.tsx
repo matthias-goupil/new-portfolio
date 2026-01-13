@@ -2,7 +2,7 @@
 
 import { Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function ThemeSwitcher() {
     const [theme, setTheme] = useState<"light" | "dark">("light");

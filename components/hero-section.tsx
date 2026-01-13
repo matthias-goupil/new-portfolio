@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
 import { ChevronsDown } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
