@@ -159,7 +159,7 @@ export default function AboutMeSection() {
                         A propos de moi
                     </motion.h1>
                     <motion.p
-                        className="text-justify text-lg text-emerald-950"
+                        className="text-justify text-xl text-emerald-950"
                         variants={textVariants}
                     >
                         Hey, moi c’est Matthias ! <br />
