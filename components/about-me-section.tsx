@@ -196,7 +196,7 @@ export default function AboutMeSection() {
                 {/* Image */}
                 <motion.div variants={imageVariants} className="w-full md:w-auto flex justify-center">
                     <div className="aspect-square w-64 md:w-96 rounded-full bg-linear-to-tr from-emerald-500 to-emerald-900 overflow-hidden p-6 md:p-10">
-                        <img src="/me.png" alt="Me" className="aspect-square w-full object-cover"/>
+                        <img src="/me.png" alt="Me" className="aspect-square w-full object-cover mt-12"/>
                     </div>
                 </motion.div>
 

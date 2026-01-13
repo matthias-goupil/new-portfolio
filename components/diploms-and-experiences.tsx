@@ -221,7 +221,7 @@ export default function DiplomsAndExperiences() {
             {/* Tabs */}
             <div
                 ref={containerRef}
-                className="relative flex flex-row md:flex-col gap-2 p-2 md:p-2 rounded-lg border shadow-xs bg-white/10 backdrop-blur-md border-white/20 w-full md:w-48"
+                className="relative w-fit h-fit flex flex-row md:flex-col gap-2 p-2 md:p-2 rounded-lg border shadow-xs bg-white/10 backdrop-blur-md border-white/20 w-full md:w-48"
             >
                 <Tab id="diploms" label="Diplômes" active={tab === "diploms"} onClick={setTab} />
                 <Tab id="xp" label="Expériences" active={tab === "xp"} onClick={setTab} />
