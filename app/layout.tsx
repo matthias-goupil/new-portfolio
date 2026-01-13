@@ -3,6 +3,7 @@ import {Gabarito, Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import Menu from "@/components/ui/menu";
 import Image from "next/image"
+import Header from "@/components/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,20 +30,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${gabarito.variable} antialiased`}
       >
-      <header className="w-full p-8 flex justify-between fixed items-center z-10">
-          <div className="flex items-center gap-1">
-              <img src="/logo.jpg" alt={"Matthias Goupil"} className='h-8'/>
-              <div>
-                  <p className="font-title font-light text-sm mb-0">Matthias Goupil</p>
-                  <p className="text-xs text-gray-500">Portfolio</p>
-              </div>
-          </div>
-          <Menu />
-      </header>
+        <Header />
         {children}
       </body>
     </html>
